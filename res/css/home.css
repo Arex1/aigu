@@ -1,0 +1,17 @@
+.nav .nav-left {
+	float: left;
+	display: -webkit-box;
+	display: flex;
+	-webkit-box-align: center;
+	align-items: center;
+}
+
+.nav .nav-right {
+	float: right;
+}
+
+.nav .nav-item[data-v-af6d3904] {
+    height: 56px;
+    line-height: 56px;
+    margin-right: 40px;
+}
