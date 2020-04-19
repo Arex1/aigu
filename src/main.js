@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import echarts from 'echarts'
 
 Vue.config.productionTip = false
 
@@ -13,6 +14,8 @@ Vue.use(VueRouter)
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
+// 引入echarts
+Vue.prototype.$echarts = echarts
 
 import HeaderBar from './components/HeaderBar.vue'
 import Index from './view/Index.vue'

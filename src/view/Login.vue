@@ -1,9 +1,9 @@
 <template>
   <div class="main">
-    <div class="login-logo">这里放logo图片</div>
+    <div class="login-logo"></div>
     <ul class="tab-nav">
-      <li>注册</li>
-      <li>登录</li>
+      <li><a href="/register">注册</a></li>
+      <li class="active"><a>登录</a></li>
     </ul>
     <b-form class="tab-content">
       <b-form-input v-model="text" placeholder="手机号"></b-form-input>
@@ -45,7 +45,8 @@ export default {
   text-align: center;
   width: 100%;
   height: 114px;
-  background-color: aqua;
+  background-image: url(http://img3.imgtn.bdimg.com/it/u=238082750,3539493853&fm=26&gp=0.jpg);
+  background-position: 0px -75px;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -68,6 +69,16 @@ export default {
   border-bottom: 2px solid #E8ECF0;
   color: #8997AB;
 }
+.tab-nav li a {
+  color: #8997AB;
+}
+.tab-nav .active a {
+  color: #4184E1;
+}
+.tab-nav .active {
+  color: #4184E1;
+  border-bottom: solid 2px #4184E1;
+}
 .tab-content {
   width: 356px;
   margin: 0 auto;
@@ -81,6 +92,7 @@ export default {
   border-radius: 2px;
   margin-top: 18px;
   padding-left: 10px;
+  font-size: .9rem;
 }
 .tab-content button {
   background-color: #4184E1;
