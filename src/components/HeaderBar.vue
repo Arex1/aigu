@@ -1,5 +1,5 @@
 <template>
-  <div class="HeaderBody">
+  <div class="HeaderBody sticky-top">
     <b-navbar class="navbar" toggleable="lg" type="dark" variant="dark" fixed="top" :sticky="sticky">
       <b-navbar-brand tag="h1" to="/">智股</b-navbar-brand>
 
@@ -21,7 +21,7 @@
             <b-button size="sm" class="my-2 my-sm-0" type="submit">搜索</b-button>
           </b-nav-form>
           <b-navbar-nav>
-            <b-nav-item to="/login">登陆</b-nav-item>
+            <b-nav-item >登陆</b-nav-item>
             <b-nav-item to="/register">注册</b-nav-item>
           </b-navbar-nav>
 
@@ -48,6 +48,6 @@ export default {
 } */
 .HeaderBody {
   background-color: #f7f7f7;
-  height: 1200px;
+  /* height: 100vmax; */
 }
 </style>

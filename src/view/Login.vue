@@ -1,30 +1,36 @@
 <template>
-  <div class="main">
-    <div class="login-logo"></div>
-    <ul class="tab-nav">
-      <li><a href="/register">注册</a></li>
-      <li class="active"><a>登录</a></li>
-    </ul>
-    <b-form class="tab-content">
-      <b-form-input v-model="text" placeholder="手机号"></b-form-input>
-      <b-form-input type="password" v-model="password" placeholder="请输入密码"></b-form-input>
-      <b-button type="submit" block variant="primary">登录</b-button>
-      <div class="other-login">
-        <a href="#">使用手机验证码登录 ></a>
-        <a href="#" class="forget-password">忘记密码？</a>
+  <b-row>
+    <b-col class="main" sm="12" lg="3">
+      <div class="login-logo"></div>
+      <ul class="tab-nav">
+        <li><a href="/register">注册</a></li>
+        <li class="active"><a>登录</a></li>
+      </ul>
+      <b-form class="tab-content">
+        <b-row>
+          <b-col sm="12" md="12">
+            <b-form-input v-model="text" placeholder="手机号"></b-form-input>
+          </b-col>
+        </b-row>
+        <b-form-input type="password" v-model="password" placeholder="请输入密码"></b-form-input>
+        <b-button type="submit" block variant="primary">登录</b-button>
+        <div class="other-login">
+          <a href="#">使用手机验证码登录 ></a>
+          <a href="#" class="forget-password">忘记密码？</a>
+        </div>
+      </b-form>
+      <div class="third-login">
+        <div class="third-login-wechat-text">
+          <div class="third-login-line"></div> 
+          <p> <span> 微信登录 </span> </p> 
+        </div>
+        <div class="third-login-wechat"> 
+          <div class="third-login-wechat-btn js-jq-login-wechat" data-type="wx"></div> 
+        </div>
       </div>
-    </b-form>
-    <div class="third-login">
-      <div class="third-login-wechat-text">
-         <div class="third-login-line"></div> 
-         <p> <span> 微信登录 </span> </p> 
-      </div>
-      <div class="third-login-wechat"> 
-        <div class="third-login-wechat-btn js-jq-login-wechat" data-type="wx"></div> 
-      </div>
-    </div>
 
-  </div>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
@@ -35,7 +41,6 @@ export default {
 
 <style scoped>
 .main {
-  width: 460px;
   margin: 0 auto;
   background-color: #fff;
   margin-top: 50px;

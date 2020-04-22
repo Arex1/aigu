@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-jumbotron header="量化交易，从智股开始" lead="优质策略，尽在智股策略商城" class="jumbotron-index">
+    <b-jumbotron header="" lead="" class="jumbotron-index">
     </b-jumbotron>
     <div class="container">
       <h4 class="title">
@@ -10,7 +10,7 @@
       <b-card style="max-width: 57rem;" class="mb-2">
         <b-row class="card-title">
           <b-col md="8" class="stock-name">
-            <a href="#">美玲时钟</a>
+            <a href="/shopdetail">美玲时钟</a>
           </b-col>
           <b-col md="4" class="author">策略作者:
             <a href="#">
@@ -72,6 +72,16 @@ export default {
   data () {
     return {
     }
+  },
+  created() {
+    this.axios.get('https://api.coindesk.com/v1/bpi/currentprice.json')
+      .then(response => {
+        this.content = response.data.bpi
+        console.log('ok')
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   },
   mounted(){
     this.drawLine();
@@ -184,7 +194,8 @@ export default {
               ]
           }
       }); */
-    }
+    },
+    
   }
 }
 </script>
@@ -195,6 +206,8 @@ export default {
   padding: 4rem 8rem;
   height: 400px;
   background-color: pink;
+  font-size: .9rem;
+  white-space: nowrap;
 }
 .jumbotron-index h1{
   font-weight: 500;
@@ -278,24 +291,6 @@ export default {
   font-weight: bold;
   color: #fb4044;
 }
-/* .stack-info .body-right__data .right__data-item.dashed-bottom{
-  border-bottom: 1px dashed #d3dae2;
-  width: 50%;
-  float: left;
-  text-align: center;
-  padding: 12px 0;
-}
-.stack-info .body-right__data .right__data-item.dashed-bottom .data-item-title{
-  font-size: 13px;
-  line-height: 17px;
-  color: #999;
-}
-.stack-info .body-right__data .right__data-item.dashed-bottom .data-item-data{
-  font-size: 18px;
-  line-height: 24px;
-  color: #333;
-  margin-bottom: 0;
-} */
 
 .stack-info .body-right__data .right__data-item{
   border-bottom: 1px dashed #d3dae2;

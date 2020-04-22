@@ -5,6 +5,8 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import echarts from 'echarts'
+import vueAxios from 'vue-axios'
+import axios from 'axios'
 
 Vue.config.productionTip = false
 
@@ -16,12 +18,14 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 // 引入echarts
 Vue.prototype.$echarts = echarts
+Vue.use(vueAxios, axios)
 
 import HeaderBar from './components/HeaderBar.vue'
 import Index from './view/Index.vue'
 import Info from './view/Info.vue'
 import Login from './view/Login.vue'
 import Register from './view/Register.vue'
+import ShopDetail from './view/ShopDetail.vue'
 
 const router = new VueRouter({
   mode: 'history',
@@ -33,7 +37,8 @@ const router = new VueRouter({
         { path: '', component: Index }, 
         { path: 'login', component: Login },
         { path: 'register', component: Register },
-        { path: 'info', component: Info }
+        { path: 'info', component: Info },
+        { path: 'shopdetail', component: ShopDetail }
       ]
     },
     // { path: '/login', component: Login },
