@@ -26,6 +26,7 @@ import Info from './view/Info.vue'
 import Login from './view/Login.vue'
 import Register from './view/Register.vue'
 import ShopDetail from './view/ShopDetail.vue'
+import MarketData from './view/MarketData.vue'
 
 const router = new VueRouter({
   mode: 'history',
@@ -38,7 +39,8 @@ const router = new VueRouter({
         { path: 'login', component: Login },
         { path: 'register', component: Register },
         { path: 'info', component: Info },
-        { path: 'shopdetail', component: ShopDetail }
+        { path: 'shopdetail', component: ShopDetail },
+        { path: 'data', component: MarketData }
       ]
     },
     // { path: '/login', component: Login },

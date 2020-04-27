@@ -9,8 +9,8 @@
         <b-navbar-nav>
           <b-nav-item to="/">首页</b-nav-item>
           <b-nav-item to="/info">快讯</b-nav-item>
-          <b-nav-item href="#">市场数据</b-nav-item>
-          <b-nav-item href="#">模型分析</b-nav-item>
+          <b-nav-item to="/data">市场数据</b-nav-item>
+          <b-nav-item to="/">模型分析</b-nav-item>
           <b-nav-item href="#">论坛</b-nav-item>
         </b-navbar-nav>
 
