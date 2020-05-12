@@ -76,19 +76,48 @@
       <!-- 策略持仓 -->
       <div class="shadow-sm p-3 mb-5 bg-white rounded">
         <div class="detail-container-title border-bottom"><span class="detail-tab-item">策略持仓</span></div>
-        <b-row class="line-text">
-          <b-col class="text" md="1"><span>当前持仓</span></b-col>
-          <b-col class="text" md="1" offset-md="7">
-            <span>历史持仓
-            </span>
-          </b-col>
-          <b-col md="2">
-            <b-form-datepicker :date-format-options="{ year: 'numeric', month: 'numeric', day: 'numeric' }" id="example-datepicker" v-model="value" class="mb-2" placeholder="" size="sm"></b-form-datepicker>
-          </b-col>
-        </b-row>
-        <div class="table">
-          <b-table striped hover :items="items" :fields="fields"></b-table>
+        <div>
+        <!-- 当前持仓 -->
+        <div class="detail-table-detail-group">
+          <div class="detail-current-position">
+            <div class="middle-line"></div>
+            <div class="current-position">当前持仓</div>
+            <div class="historical-position">历史持仓</div>
+            <div class="date-picker">
+              <el-date-picker size="mini" v-model="date1" type="date" placeholder="选择日期"></el-date-picker>
+            </div>
+          </div>
+          <div class="table-current-position">
+            <b-table outlined  small :items="currentPositionItems" :fields="fields" table-class="positions-table" thead-tr-class="positions-head-table" tbody-tr-class="positions-body-table"></b-table>
+          </div>
         </div>
+        <!-- 策略持仓 -->
+        <div class="detail-table-detail-group">
+          <div class="detail-current-position">
+            <div class="middle-line"></div>
+            <div class="current-position">策略持仓</div>
+            <div class="historical-position">历史调仓</div>
+            <div class="date-picker">
+              <el-date-picker size="mini" v-model="date1" type="date" placeholder="选择日期"></el-date-picker>
+            </div>
+          </div>
+          <div class="table-current-position">
+            <b-table outlined  small :items="newTransactionItems" :fields="fields2" table-class="positions-table" thead-tr-class="positions-head-table" tbody-tr-class="positions-body-table"></b-table>
+          </div>
+        </div>
+        </div>
+        <!-- <div class="test">
+          <div class="test2">
+            <el-date-picker
+              class=""
+              size='mini'
+                v-model="date1"
+                type="date"
+                placeholder="选择日期">
+              </el-date-picker>
+          </div>
+          <span class="tet1">hello</span>
+        </div> -->
       </div>
     </b-container>
     <b-card no-body class="text-center d-none d-md-block d-lg-block d-xl-block">
@@ -104,14 +133,36 @@
 export default {
   data() {
     return {
-      value: '2020-02-02',
-      fields: ['first_name', 'last_name', 'age'],
-      items: [
-        { isActive: true, age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
-        { isActive: false, age: 21, first_name: 'Larsen', last_name: 'Shaw' },
-        { isActive: false, age: 89, first_name: 'Geneva', last_name: 'Wilson' },
-        { isActive: true, age: 38, first_name: 'Jami', last_name: 'Carney' }
-      ]
+      date1: '2020-02-02',
+      fields: [
+        {key: 'stock', label: '股票'},
+        {key: 'total', label: '数量'},
+        {key: 'value', label: '市值'},
+        {key: 'cost', label: '成本价'},
+        {key: 'price', label: '现价'},
+        {key: 'positions', label: '仓位'},
+        {key: 'profitLoss', label: '当日盈亏'},
+        {key: 'totalLoss', label: '累计盈亏'}
+      ],
+      fields2: [
+        {key: 'stock', label: '股票'},
+        {key: 'date', label: '时间'},
+        {key: 'operation', label: '操作'},
+        {key: 'total', label: '数量'},
+        {key: 'positions', label: '仓位'},
+        {key: 'price', label: '成交均价'},
+      ],
+      currentPositionItems: [
+          { stock: '黄金', total: '222300股', value: '21.1亿', cost: '400', price: '500', positions: '16.59%', profitLoss:'12121/2.12%', totalLoss: '23423/4.25%', _rowVariant: 'danger' },
+          { stock: '原油', total: '1231200股', value: '11.1亿', cost: '200', price: '218', positions: '6.59%', profitLoss:'-121/-2.12%', totalLoss: '-2323/-4.25%', _rowVariant: 'success' },
+          
+        ],
+      newTransactionItems: [
+          { stock: '黄金', total: '-222300股', date: '2020-05-11', operation: '卖', price: '500', positions: '16.59%', _rowVariant: 'danger' },
+          { stock: '原油', total: '1231200股', date: '2020-05-11', operation: '买', price: '145', positions: '-16.59%', _rowVariant: 'success' },
+          { stock: '原油', total: '1231200股', date: '2020-05-11', operation: '买', price: '145', positions: '-16.59%', _rowVariant: 'success' },
+          { stock: '原油', total: '1231200股', date: '2020-05-11', operation: '买', price: '145', positions: '-16.59%', _rowVariant: 'success' },
+        ]
     }
   },
   created() {
@@ -235,5 +286,68 @@ export default {
 }
 .table{
   font-size: 16px;
+}
+.detail-table-detail-group{
+  padding-top: 21px;
+  overflow: hidden;
+}
+.detail-current-position {
+  position: relative;
+}
+.middle-line {
+  position: absolute;
+  width: 74%;
+  height: 1px;
+  top: 10px;
+  left: 6%;
+  border: .5px solid #9ea3a6;
+}
+.current-position {
+  width: 80%;
+  font-size: 14px;
+  color: #333;
+  margin-right: 10px;
+  float: left;
+}
+.historical-position {
+  margin-right: 5px;
+  color: #9ea3a6;
+  float: left;
+  font-size: 14px;
+}
+.date-picker {
+  float: right;
+  width: 13%;
+  margin-top: -7px;
+}
+.date-picker .el-input {
+  width: 100% !important;
+}
+.table-current-position{
+  margin-top: 40px;
+}
+</style>
+<style>
+.positions-table{
+  font-size: 14px;
+  color: #333;
+  text-align: left;
+  font-weight: normal;
+}
+.positions-head-table th{
+  font-size: 14px;
+  color: #333333;
+  font-weight: normal;
+  padding: 10px 14px;
+  text-align: left;
+  background-color: #e8ecf0;
+}
+.positions-body-table td{
+  font-size: 14px;
+  color: #333333;
+  font-weight: normal;
+  padding: 10px 14px;
+  text-align: left;
+  /* background-color: #e8ecf0; */
 }
 </style>
