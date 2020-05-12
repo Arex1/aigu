@@ -31,6 +31,7 @@ import Login from './view/Login.vue'
 import Register from './view/Register.vue'
 import ShopDetail from './view/ShopDetail.vue'
 import MarketData from './view/MarketData.vue'
+import Admin from './view/Admin.vue'
 
 
 const router = new VueRouter({
@@ -45,10 +46,10 @@ const router = new VueRouter({
         { path: 'register', component: Register },
         { path: 'info', component: Info },
         { path: 'shopdetail', component: ShopDetail },
-        { path: 'data', component: MarketData }
+        { path: 'data', component: MarketData },
       ]
     },
-    // { path: '/login', component: Login },
+    { path: '/admin', component: Admin },
     // { path: '/index', component: Index , children: [{ path: 'home', component: Home }, { path: 'collect', component: Collect }, { path: 'vuelidate', component: FormVueLidate }]},
   ]
 })

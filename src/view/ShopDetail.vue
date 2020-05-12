@@ -134,6 +134,7 @@
 <script>
 // import echarts from 'echarts'
 export default {
+  name: "ShopDetail",
   data() {
     return {
       date1: '2020-02-02',
