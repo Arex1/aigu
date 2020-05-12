@@ -7,7 +7,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import echarts from 'echarts'
 import vueAxios from 'vue-axios'
 import axios from 'axios'
-import {DatePicker} from 'element-ui'
+import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 
@@ -22,7 +22,7 @@ Vue.use(IconsPlugin)
 // 引入echarts
 Vue.prototype.$echarts = echarts
 Vue.use(vueAxios, axios)
-Vue.use(DatePicker)
+Vue.use(ElementUI)
 
 import HeaderBar from './components/HeaderBar.vue'
 import Index from './view/Index.vue'

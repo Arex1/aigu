@@ -23,11 +23,11 @@
                 <div class="data-value text-danger">97.41%</div>
               </b-col>
               <b-col>
-                <div class="text-secondary data-title">胜率</div>
+                <div class="text-secondary data-title">年化收益率</div>
                 <div class="data-value">53.7%</div>
               </b-col>
               <b-col>
-                <div class="text-secondary data-title">盈亏比</div>
+                <div class="text-secondary data-title">Alpha</div>
                 <div class="data-value">186.02%</div>
               </b-col>
               <b-col>
@@ -58,7 +58,10 @@
         <b-row>
           <b-col md="3">
             <div class="detail-container-title">策略信息</div>
-            <div class="border-bottom canvas">当前仓位：66%</div>
+            <div class="border-bottom canvas">
+              <span class="current-progress">当前仓位</span>
+              <el-progress type="circle" :percentage="59"></el-progress>
+            </div>
             <div class="detail-strategy-data-group">
               <div class="detail-strategy-data">交易标的:<span>正常股票</span></div>
               <div class="detail-strategy-data">交易时间:<span>盘中交易</span></div>
@@ -325,6 +328,17 @@ export default {
 }
 .table-current-position{
   margin-top: 40px;
+}
+.border-bottom {
+  position: relative;
+}
+.current-progress {
+  display: block;
+  position:absolute;
+  font-size: 14px;
+  color: #8997ab;
+  left: 95px;
+  top: 20px;
 }
 </style>
 <style>
