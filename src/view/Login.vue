@@ -1,36 +1,31 @@
 <template>
-  <b-row>
-    <b-col class="main" sm="12" lg="3">
-      <div class="login-logo"></div>
-      <ul class="tab-nav">
-        <li><a href="/register">注册</a></li>
-        <li class="active"><a>登录</a></li>
-      </ul>
-      <b-form class="tab-content">
-        <b-row>
-          <b-col sm="12" md="12">
-            <b-form-input v-model="text" placeholder="手机号"></b-form-input>
-          </b-col>
-        </b-row>
-        <b-form-input type="password" v-model="password" placeholder="请输入密码"></b-form-input>
-        <b-button type="submit" block variant="primary">登录</b-button>
-        <div class="other-login">
-          <a href="#">使用手机验证码登录 ></a>
-          <a href="#" class="forget-password">忘记密码？</a>
+      <form>
+    
+        <div class="segment">
+          <h1>账号登录</h1>
         </div>
-      </b-form>
-      <div class="third-login">
-        <div class="third-login-wechat-text">
-          <div class="third-login-line"></div> 
-          <p> <span> 微信登录 </span> </p> 
+        
+        <label>
+          <input type="text" placeholder="Email Address"/>
+        </label>
+        <label>
+          <input type="password" placeholder="Password"/>
+        </label>
+        <button class="red" type="button"><i class="icon ion-md-lock"></i> Log in</button>
+        
+        <div class="segment">
+          <button class="unit" type="button"><i class="icon ion-md-arrow-back"></i></button>
+          <button class="unit" type="button"><i class="icon ion-md-bookmark"></i></button>
+          <button class="unit" type="button"><i class="icon ion-md-settings"></i></button>
         </div>
-        <div class="third-login-wechat"> 
-          <div class="third-login-wechat-btn js-jq-login-wechat" data-type="wx"></div> 
+        
+        <div class="input-group">
+          <label>
+            <input type="text" placeholder="Email Address"/>
+          </label>
+          <button class="unit" type="button"><i class="icon ion-md-search"></i></button>
         </div>
-      </div>
-
-    </b-col>
-  </b-row>
+      </form>
 </template>
 
 <script>
@@ -42,146 +37,109 @@ export default {
 <style scoped>
 .main {
   margin: 0 auto;
-  background-color: #fff;
+  background-color: #f7f7f7;
   margin-top: 50px;
-  box-shadow: 0 4px 10px 0 #cbd2db;
 }
-.login-logo {
-  text-align: center;
+.test {
   width: 100%;
-  height: 114px;
-  background-image: url(http://img3.imgtn.bdimg.com/it/u=238082750,3539493853&fm=26&gp=0.jpg);
-  background-position: 0px -75px;
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-.tab-nav {
-  padding: 0;
-  display: flex;
-  justify-content: center;
-}
-.tab-nav li {
-  display: inline-block;
-  text-align: center;
-  line-height: 38px;
-  width: 90px;
-  height: 36px;
-  margin-top: 20px;
-  list-style: none;
-  font-size: 16px;
-  cursor: pointer;
-  margin-top: 20px;
-  border-bottom: 2px solid #E8ECF0;
-  color: #8997AB;
-}
-.tab-nav li a {
-  color: #8997AB;
-}
-.tab-nav .active a {
-  color: #4184E1;
-}
-.tab-nav .active {
-  color: #4184E1;
-  border-bottom: solid 2px #4184E1;
-}
-.tab-content {
-  width: 356px;
-  margin: 0 auto;
-  overflow: hidden;
-}
-.tab-content input{
-  width: 100%;
-  height: 48px;
-  line-height: 48px;
-  border: solid 1px #E7EAEE;
-  border-radius: 2px;
-  margin-top: 18px;
-  padding-left: 10px;
-  font-size: .9rem;
-}
-.tab-content button {
-  background-color: #4184E1;
-  width: 100%;
-  height: 48px;
-  font-size: 16px;
-  line-height: 48px;
-  text-align: center;
-  color: white;
-  margin-top: 18px;
-  border: solid 1px #4184E1;
-  border-radius: 2px;
-}
-.tab-content button:hover{
-  background-color: #579af7;
-}
-.other-login{
-  display: flex;
-  justify-content: space-between;
-}
-.other-login a{
-  display: inline-block;
-  width: 150px;
-  height: 37px;
-  line-height: 37px;
-  text-align: left;
-  color: #4184e1;
-  font-size: 14px;
-  cursor: pointer;
-}
-.other-login .forget-password {
-  width: 100px;
-  height: 37px;
-  line-height: 37px;
-  text-align: right;
-  color: #4184e1;
-  font-size: 14px;
-}
-.third-login{
-  width: 356px;
-  margin: 0 auto !important;
-  overflow: hidden;
-  margin: 0px 0 26px;
-}
-.third-login .third-login-wechat-text{
-  position: relative;
-}
-.third-login .third-login-wechat-text .third-login-line{
-  height: 1px;
-  width: 100%;
-  background: #CBD2DB;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-}
-.third-login .third-login-wechat-text p{
-  color: #8997AB;
-  text-align: center;
-}
-.third-login .third-login-wechat-text p span{
-  background: #fff;
-  padding: 0 30px;
-  position: relative;
-  z-index: 2;
-}
-.third-login .third-login-wechat {
-  text-align: center;
-  padding: 18px 0 0;
-  margin-bottom: 30px;
-}
-.third-login .third-login-wechat .third-login-wechat-btn {
-  width: 40px;
-  height: 40px;
-  display: inline-block;
-  background: url(../assets/wechat-an.png) no-repeat center;
-  background-size: 40px 40px;
-}
-.third-login .third-login-wechat .third-login-wechat-btn:hover {
-  background: url(../assets/wechat-active.png) no-repeat center;
-  background-size: 40px 40px;
-}
-a:hover, a:active, a:focus, a:visited {
-    text-decoration: none;
+  height: 100%;
 }
 
+    body, p, input, select, textarea, button {
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: -0.2px;
+      font-size: 16px;
+    }
+
+    div, p {
+      color: #BABECC;
+      text-shadow: 1px 1px 1px #FFF;
+    }
+
+    form {
+      padding: 16px;
+      width: 320px;
+      margin: 0 auto;
+    }
+
+    .segment {
+      padding: 32px 0;
+      text-align: center;
+    }
+
+    button, input {
+      border: 0;
+      outline: 0;
+      font-size: 16px;
+      border-radius: 320px;
+      padding: 16px;
+      background-color: #f7f7f7;
+      text-shadow: 1px 1px 0 #FFF;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 24px;
+      width: 100%;
+    }
+
+    input {
+      margin-right: 8px;
+      box-shadow: inset 2px 2px 5px #BABECC, inset -5px -5px 10px #FFF;
+      width: 100%;
+      box-sizing: border-box;
+      transition: all 0.2s ease-in-out;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input:focus {
+      box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+    }
+
+    button {
+      color: #61677C;
+      font-weight: bold;
+      box-shadow: -5px -5px 20px #FFF, 5px 5px 20px #BABECC;
+      transition: all 0.2s ease-in-out;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover {
+      box-shadow: -2px -2px 5px #FFF, 2px 2px 5px #BABECC;
+    }
+    button:active {
+      box-shadow: inset 1px 1px 2px #BABECC, inset -1px -1px 2px #FFF;
+    }
+    button .icon {
+      margin-right: 8px;
+    }
+    button.unit {
+      border-radius: 8px;
+      line-height: 0;
+      width: 48px;
+      height: 48px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 8px;
+      font-size: 19.2px;
+    }
+    button.unit .icon {
+      margin-right: 0;
+    }
+    button.red {
+      display: block;
+      width: 100%;
+      color: #AE1100;
+    }
+
+    .input-group {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    .input-group label {
+      margin: 0;
+      flex: 1;
+    }
 </style>

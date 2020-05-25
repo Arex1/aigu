@@ -32,6 +32,12 @@ import Register from './view/Register.vue'
 import ShopDetail from './view/ShopDetail.vue'
 import MarketData from './view/MarketData.vue'
 import Admin from './view/Admin.vue'
+import MyHome from './view/MyHome.vue'
+import Strategy from './view/Myhome/Strategy.vue'
+import Post from './view/Myhome/Post.vue'
+import Reply from './view/Myhome/Reply.vue'
+import Setting from './view/Myhome/Setting.vue'
+import Logout from './view/Myhome/Logout.vue'
 
 
 const router = new VueRouter({
@@ -50,6 +56,17 @@ const router = new VueRouter({
       ]
     },
     { path: '/admin', component: Admin },
+    { 
+      path: '/myhome',
+      component: MyHome,
+      children: [
+        { path: 'strategy', component: Strategy, name: 'strategy'},
+        { path: 'post', component: Post, name: 'post'},
+        { path: 'reply', component: Reply, name: 'reply'},
+        { path: 'setting', component: Setting, name: 'setting'},
+        { path: 'logout', component: Logout, name: 'logout'}
+      ]
+    },
     // { path: '/index', component: Index , children: [{ path: 'home', component: Home }, { path: 'collect', component: Collect }, { path: 'vuelidate', component: FormVueLidate }]},
   ]
 })

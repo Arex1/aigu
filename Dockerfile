@@ -1,16 +1,5 @@
-# # Set default image base
-# FROM node:13.10.1 as build-stage
-
-# # ADD . /client
-
-# # WORKDIR /client
-
-# # RUN yarn install
-
-# # # expose port 8080
-# # EXPOSE 8080
-# # Set default image base
-# # build stage
+# Set default image base
+FROM node:13.10.1 as build-stage
 
 # ADD . /client
 
@@ -18,26 +7,33 @@
 
 # RUN yarn install
 
-# # build app for production with minification
-# RUN yarn build --mode production
+# # expose port 8080
+# EXPOSE 8080
+# Set default image base
+# build stage
 
-# # production stage
-# FROM nginx:stable-alpine as production-stage
+ADD . /client
 
-# # COPY --from=build-stage /client/dist /usr/share/nginx/html
-# # COPY --from=build-stage /client/nginx/default.conf /etc/nginx/conf.d
+WORKDIR /client
 
-# RUN mkdir /app
-# COPY --from=build-stage /client/dist /app
-# COPY --from=build-stage /client/nginx.conf /etc/nginx/nginx.conf
+RUN yarn install
 
-# EXPOSE 80
+# build app for production with minification
+RUN yarn build --mode production
 
-# CMD ["nginx", "-g", "daemon off;"]
+# production stage
+FROM nginx:stable-alpine as production-stage
 
-FROM nginx:latest
-COPY /dist /app
-COPY nginx.conf /etc/nginx/nginx.conf
+# COPY --from=build-stage /client/dist /usr/share/nginx/html
+# COPY --from=build-stage /client/nginx/default.conf /etc/nginx/conf.d
+
+RUN mkdir /app
+COPY --from=build-stage /client/dist /app
+COPY --from=build-stage /client/nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
 
 # docker image build -t aigu-client .
 # docker run --name aigu-client -p 80:80 -d aigu-client
