@@ -32,9 +32,8 @@
     </b-navbar>
     <div :class="{popmodal: isPop}" v-show="isPop">
       <b-row>
-        <!-- <b-col cols="12" md="4" sm="12"></b-col> -->
         <b-col cols="12" md="4" sm="12" offset-md="4" offset-sm="0">
-          <div class="login" md="3">
+          <div class="login" md="3" v-if="loginStyle=='phonenumber'">
             <div class="close closePop" @click="goLogin">X</div>
             <div class="aiguName">AI 智股</div>
             <div>
@@ -53,12 +52,41 @@
               </b-form>
             </div>
             <div class="passwordLogin mt-2 mb-3">
-              <a href="">密码登录></a>
+              <a href="" @click.prevent="goPassword" class="float-left">密码登录></a>
+              <a href="" @click.prevent="goRegister" class="float-right">没有账号/注册></a>
+            </div>
+          </div>
+          <div class="login" md="3" v-else-if="loginStyle=='password'">
+            <div class="close closePop" @click="goLogin">X</div>
+            <div class="aiguName">AI 智股</div>
+            <div>
+              <div class="verificationCode mb-3">密码登录</div>
+              <b-form>
+                <b-form-input size="sm" v-model="form.phonenumber" placeholder="手机/邮箱/用户名"></b-form-input>
+                <b-form-input size="sm" v-model="form.phonenumber" placeholder="密码" class="mt-3 mb-3"></b-form-input>
+                <b-button block variant="primary" size="sm">登录</b-button>
+              </b-form>
+            </div>
+            <div class="passwordLogin mt-2 mb-5">
+              <a href="" @click.prevent="goPhone" class="float-left text-secondary">忘记密码?</a>
+              <a href="" @click.prevent="goPhone" class="float-right">验证码登录></a>
+            </div>
+          </div>
+          <div class="login" md="3" v-else-if="loginStyle=='register'">
+            <div class="close closePop" @click="goLogin">X</div>
+            <div class="aiguName">AI 智股</div>
+            <div>
+              <div class="mb-3 text-center">完善信息，开启量化之路</div>
+              <b-form>
+                <b-form-input size="sm" v-model="form.phonenumber" placeholder="用户名，必填，3-16位字母，数字"></b-form-input>
+                <b-form-input type="password" size="sm" v-model="form.phonenumber" placeholder="密码，必填，6-21位字母+数字/符号组合密码" class="mt-3 mb-3"></b-form-input>
+                <b-form-input size="sm" v-model="form.phonenumber" placeholder="邮箱，用于接收策略调仓信号" class="mb-3"></b-form-input>
+                <b-button block variant="primary" size="sm">完成</b-button>
+              </b-form>
             </div>
           </div>
         </b-col>
       </b-row>
-
     </div>
     <router-view></router-view>
   </div>
@@ -69,6 +97,7 @@ export default {
   name: "HeaderBar",
   data() {
     return {
+      loginStyle: 'phonenumber',
       isPop: false,
       form: {
         phonenumber: '',
@@ -81,8 +110,16 @@ export default {
   },
   methods: {
     goLogin() {
-      // console.log("hello");
       this.isPop =!this.isPop;
+    },
+    goPassword() {
+      this.loginStyle = 'password'
+    },
+    goPhone() {
+      this.loginStyle = 'phonenumber'
+    },
+    goRegister() {
+      this.loginStyle = 'register'
     }
   },
 }
@@ -109,11 +146,15 @@ export default {
 .passwordLogin a{
   color: #dc3546;
   text-decoration: none;
+  font-size: .5rem;
 }
 .closePop{
   font-weight: 450;
   font-size: 1.2rem;
   cursor: pointer;
+}
+.form-control-sm{
+  font-size: .7rem;
 }
 </style>
 <style>
@@ -137,8 +178,10 @@ export default {
 }
 .login{
   background-color: #fff;
-  padding: 10px;
+  padding: 1rem;
   border-radius: 10px;
+  width: 80%;
+  margin: 0 auto;
 }
 .aiguName{
   text-align: center;
