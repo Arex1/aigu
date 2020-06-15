@@ -1,28 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
+ 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        .test{
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.4);
-            padding: 200px;
-        }
-    </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>js获取时间段</title>
 </head>
+ 
 <body>
-    <h1>hello</h1>
-    <div class="test">
-        <label for="">username</label>
-        <input type="text">
-    </div>
+    输入开始时间、结束时间、时间间隔，计算这段时间内每个时间间隔的数据<br /><br />
+    例如<br /><br />
+    开始时间：2019-04-12 16:00:00 结束时间：2019-04-12 18:00:00 时间间隔：30<br /><br />
+    产生 2019-04-12 17:30:00 &nbsp;&nbsp;&nbsp;&nbsp; 2019-04-12 17:00:00
+    &nbsp;&nbsp;&nbsp;&nbsp; 2019-04-12 16:30:00
+    <br /><br />
+    默认设置：<br /><br />
+    开始时间：当前时间 结束时间：当前时间前一小时 时间间隔 30分钟<br /><br />
+    <input id="a" placeholder="开始日期（年月日时分秒）" value="2019-04-12 16:00:00" /><input id="b" placeholder="结束时间（年月日时分秒）"
+        value="2019-04-12 18:00:00" /><input id="c" placeholder="时间间隔（分钟）" value="30" /><button type="button"
+        id="button">
+        按钮
+    </button>
+    <br />
+    <h4>展示区域</h4>
+    <ul>
+ 
+    </ul>
+    <script>
+        function getDateArray(startDate, endDate, space) {
+            if (!endDate) {
+                endDate = new Date();
+            }
+            if (!startDate) {
+                startDate = new Date(new Date().getTime() - 1 * 60 * 60 * 1000);
+            }
+            if (!space) {
+                space = 30 * 60 * 1000;
+            } else {
+                space = space * 60 * 1000;
+            }
+            var endTime = endDate.getTime();
+            var startTime = startDate.getTime();
+            var mod = endTime - startTime;
+            if (mod <= space) {
+                alert("时间太短");
+                return;
+            }
+            var dateArray = [];
+            while (mod >= space) {
+                var d = new Date();
+                d.setTime(startTime + space);
+                dateArray.push(d);
+                mod = mod - space;
+                startTime = startTime + space;
+            }
+            var end = endDate.getTime();
+            var start = startDate.getTime();
+            dateArray.unshift(new Date(start)); // 插入开头时间
+            // 正序
+            return dateArray.sort(function (a, b) {
+                return Date.parse(b) - Date.parse(a);
+            });
+        }
+ 
+        var a = document.getElementById("a");
+        var b = document.getElementById("b");
+        var c = document.getElementById("c");
+        document.getElementById("button").onclick = function () {
+            document.querySelector("ul").innerHTML = "";
+            var aa = new Date(a.value);
+            var bb = new Date(b.value);
+            if (!a.value) {
+                var result = getDateArray();
+            } else {
+                var result = getDateArray(aa, bb, c.value);
+            }
+            for (var i = result.length - 1; i >= 0; i--) {
+                var node = document.createElement("li");
+                var textnode = document.createTextNode(timeFormat(result[i]));
+                node.appendChild(textnode);
+                document.querySelector("ul").appendChild(node);
+            }
+        };
+        // 时间格式化
+        function timeFormat(dt) {
+            return (
+                spliceZero(dt.getFullYear()) + '-' + spliceZero(dt.getMonth() + 1) + '-' + spliceZero(dt.getDate()) 
+                + " " + spliceZero(dt.getHours()) + ":" + spliceZero(dt.getMinutes()) + ":" + spliceZero(dt.getSeconds())
+            );
+        }
+ 
+        // 时间格式化、1位数时，前面拼接0
+        function spliceZero(i) {
+            if (i.toString().length == 1) {
+                i = "0" + i;
+            }
+            return i;
+        }
+    </script>
 </body>
+ 
 </html>

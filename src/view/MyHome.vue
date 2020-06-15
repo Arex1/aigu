@@ -2,7 +2,14 @@
   <div class="wrapper">
     <div class="slimScrollDiv">
       <div class="side-menu">
-        <div class="nav-header">欢迎小车</div>
+        <b-row>
+          <b-col md="8">
+            <a class="nav-header ml-2" href="/"><span>回到主页</span>
+              <b-icon icon="box-arrow-left" aria-hidden="true"></b-icon>
+            </a>
+          </b-col>
+          <b-col></b-col>
+        </b-row>
         <div class="nav-avator">
           <div class="my-avator">
             <b-avatar class="mr-2" variant="info" src="https://placekitten.com/300/300" size="4rem"></b-avatar>
@@ -72,14 +79,14 @@ export default {
     box-sizing: border-box;
   }
   .nav-header {
-    text-align: center;
-    padding: 8px 0px;
+    display: block;
+    padding: 8px 5px;
     background: #1c2b36;
     font-family: open sans,helvetica neue,Helvetica,Arial,sans-serif;
-    font-size: 20px;
-    color: #676a6c;
-    font-weight: 600;
+    font-size: .8rem;
+    color: #ccc;
     line-height: 1.42857143;
+    text-decoration: none;
   }
   .side-menu-content{
     list-style: none;
@@ -100,6 +107,9 @@ export default {
     text-align: left;
     padding: 14px 20px 14px 25px;
     font-weight: 600;
+  }
+  .side-menu-content li a:hover{
+    color: #ccc;
   }
   .my-avator{
     text-align: center;

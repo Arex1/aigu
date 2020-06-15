@@ -7,11 +7,11 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item to="/">首页</b-nav-item>
-          <b-nav-item to="/info">快讯</b-nav-item>
-          <b-nav-item to="/data">市场数据</b-nav-item>
-          <b-nav-item to="/">模型分析</b-nav-item>
-          <b-nav-item href="#">论坛</b-nav-item>
+          <b-nav-item to="/" :active="isActive=='index'">首页</b-nav-item>
+          <b-nav-item to="/info" :active="isActive=='info'">快讯</b-nav-item>
+          <b-nav-item to="/data" :active="isActive=='data'">市场数据</b-nav-item>
+          <b-nav-item to="/" disabled>模型分析</b-nav-item>
+          <b-nav-item href="#" disabled>论坛</b-nav-item>
         </b-navbar-nav>
 
         <b-navbar-nav class="ml-auto">
@@ -104,7 +104,7 @@ export default {
         numberCode: ''
       },
       sticky: true,
-      isLogin: false,
+      isLogin: true,
       centerDialogVisible: false
     }
   },
@@ -120,6 +120,18 @@ export default {
     },
     goRegister() {
       this.loginStyle = 'register'
+    }
+  },
+  computed: {
+    isActive() {
+      if (this.$route.path=='/') {
+        return 'index';
+      } else if (this.$route.path == '/info') {
+        return 'info';
+      } else if (this.$route.path == '/data') {
+        return 'data'
+      }
+      return 'index';
     }
   },
 }

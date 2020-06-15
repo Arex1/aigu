@@ -1,29 +1,79 @@
 <template>
   <div>
-    <div class="sr-only">
-      <div class="ban-chart-out">
-        <div class="charts" ref="myChart1" :style="{width: '20%', height: '200px'}"></div>
-        <div class="charts" ref="myChart2" :style="{width: '20%', height: '200px'}"></div>
-        <div class="charts" ref="myChart3" :style="{width: '20%', height: '200px'}"></div>
-        <div class="charts" ref="myChart4" :style="{width: '20%', height: '200px'}"></div>
-        <div class="charts" ref="myChart5" :style="{width: '20%', height: '200px'}"></div>
-      </div>
-      <div style="background-color:red">
-        <div>表1</div>
-        <div>表2</div>
-        <div>表3</div>
-        <div>表4</div>
-      </div>
-      <!-- 涨停池 -->
-      <div >
-        <b-table sticky-header :fields="fields" :items="items" head-variant="dark"></b-table>
-      </div>
-    </div>
-    <!-- 新版本 -->
     <b-card no-body>
       <b-tabs pills card vertical nav-class="nav-tabs" active-nav-item-class='activate-li-tab'>
-        <b-tab title="数据分析" active><b-card-text>Tab contents 1</b-card-text></b-tab>
-        <b-tab title="赚钱效应" :active="true">
+        <b-tab title="数据分析" :active="true">
+          <div class="data-analysis-header shadow clearfix">
+            <div class="selectDate">
+              <el-date-picker
+                v-model="value2"
+                align="right"
+                type="date"
+                placeholder="选择日期"
+                :picker-options="pickerOptions1"
+                id="data-analysis-date">
+              </el-date-picker>
+            </div>
+            <b-row class="text-center header-charts">
+              <!-- PC端显示，移动端隐藏 -->
+              <b-col sm=2 class="d-none d-md-block">
+                <b-row class="chartStyle">
+                  <!-- 市场真实数据 -->
+                  <div id="heat" :style="{width: '70%', height: '100%'}"></div>
+                </b-row>
+              </b-col>
+              <b-col sm=2 class="d-none d-md-block">
+                <b-row class="chartStyle bar-charts">
+                  <!-- 涨跌分布 -->
+                  <div id="myChart" :style="{width: '100%', height: '100%'}"></div>
+                </b-row>
+              </b-col>
+              <b-col sm=2 class="d-none d-md-block">
+                <!-- 涨跌对比 -->
+                <b-row class="chartStyle">
+                  <div id="myChart2" :style="{width: '100%', height: '100%'}"></div>
+                </b-row>
+              </b-col>
+              <b-col sm=2 class="d-none d-md-block">
+                <!-- 涨跌停对比 -->
+                <b-row class="chartStyle">
+                  <div id="myChart3" :style="{width: '100%', height: '100%'}"></div>
+                </b-row>
+              </b-col>
+              <b-col sm=2 class="d-none d-md-block">
+                <!-- 封板未遂(炸板率:19%) -->
+                <b-row class="chartStyle">
+                  <div id="myChart4" :style="{width: '100%', height: '100%'}"></div>
+                </b-row>
+              </b-col>
+              <b-col sm=2 class="d-none d-md-block">
+                <!-- 昨日涨跌停今日表现 -->
+                <b-row class="chartStyle">
+                  <div id="myChart5" :style="{width: '100%', height: '100%'}"></div>
+                </b-row>
+              </b-col>
+            </b-row>
+          </div>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+        </b-tab>
+        <b-tab title="赚钱效应" >
           <b-tabs content-class="mt-3">
             <b-tab title="效应一">
               <b-alert show>仅供参考</b-alert>
@@ -36,8 +86,8 @@
                     </b-form-group>
                   </b-col>
                   <b-col sm="3">
-                    <b-form-group label-cols="4" label-cols-lg="3" label-size="sm" label="日期:" label-for="input-sm">
-                      <b-form-input id="input-sm" size="sm" placeholder="2020-05-14"></b-form-input>
+                    <b-form-group label-cols="4" label-cols-lg="3" label-size="sm" label="日期:" label-for="second-date">
+                      <b-form-input id="second-date" size="sm" placeholder="2020-05-14"></b-form-input>
                     </b-form-group>
                   </b-col>
                   <b-col sm="6">
@@ -570,13 +620,13 @@
           <b-form @submit="onSubmit" v-if="true">
             <b-row>
               <b-col sm="3">
-                <b-form-group label-cols="4" label-cols-lg="3" label-size="sm" label="日期:" label-for="input-sm">
-                  <b-form-input id="input-sm" size="sm" placeholder="2020-05-14"></b-form-input>
+                <b-form-group label-cols="4" label-cols-lg="3" label-size="sm" label="日期:" label-for="third-date">
+                  <b-form-input id="third-date" size="sm" placeholder="2020-05-14"></b-form-input>
                 </b-form-group>
               </b-col>
               <b-col sm="6">
                 <b-form-group label-cols="3" label-cols-lg="2" label-size="sm" label="评论区:" label-for="input-sm">
-                  <b-form-input id="input-sm" size="sm"></b-form-input>
+                  <b-form-input id="input-third" size="sm"></b-form-input>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -689,9 +739,16 @@
   </div>
 </template>
 <script>
+// import echarts from 'echarts'
 export default {
   data() {
     return {
+      value2: Date.now(),
+      pickerOptions1: {
+        disabledDate(time) {
+          return time.getTime() > Date.now();
+        }
+      },
       fields: [
         {key: 'id', label: '序号'},
         {key: 'stackName', label: '股票名称'},
@@ -758,13 +815,175 @@ export default {
         ],
     }
   },
+  mounted(){
+    this.drawLine();
+  },
   methods: {
     onSubmit() {
       console.log("添加")
-    }
-  },
-  mounted(){
-  },
+    },
+    // 生成随机数测试用。
+    generateRandomArr(n, min, max) {
+      var arr = [];
+      for (var i = 0; i < n; i++) {
+        var random = Math.floor(Math.random() * (max - min + 1) + min);
+        arr.push(random);
+      }
+      return arr;
+    },
+    drawLine(){
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = this.$echarts.init(document.getElementById('myChart'));
+      let myChart2 = this.$echarts.init(document.getElementById('myChart2'))
+      let myChart3 = this.$echarts.init(document.getElementById('myChart3'))
+      let myChart4 = this.$echarts.init(document.getElementById('myChart4'))
+      let myChart5 = this.$echarts.init(document.getElementById('myChart5'))
+      let heat = this.$echarts.init(document.getElementById('heat'))
+      window.onresize = function() {
+        heat.resize();
+        myChart.resize();
+        myChart2.resize();
+        myChart3.resize();
+        myChart4.resize();
+        myChart5.resize();
+      }
+      // 绘制图表
+      // 涨跌分布
+      let option = {
+        title: {
+          text: '涨跌分布',
+          x:'left',
+          y:'top',
+          textStyle: {fontSize: 13, color: '#2c3e50'}
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'line'
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          top: "15%",
+          bottom: "0%",
+          containLabel: true
+        },
+        xAxis: {type: 'category',show: false, data: this.generateRandomArr(6, 100, 200)},
+        yAxis: { type: 'value', position: 'right', axisLine: { show: false },
+            axisTick: { show: false },
+            splitNumber: 2,
+            splitLine:{ show:true, lineStyle:{ type:'dashed' } }
+        },
+        series: [{
+          name: '涨',
+          data: [120, 200, 150, 80, 70, 110],
+          barWidth: '60%',
+          type: 'bar'
+        }]
+      };
+      myChart.setOption(option, true);
+
+      let heatOption = {
+        title: {
+          text: '市场真实数据',
+          x:'center',
+          y:'top',
+          textStyle: {fontSize: 13, color: '#2c3e50'}
+        },
+        tooltip: {
+          formatter: '{a} : {c}%',
+          "textStyle": {
+            "fontSize": 10
+          }
+        },
+        series: [
+          {
+            name: '实时热度',
+            type: 'gauge',
+            radius: '100%',//仪表盘半径
+            center: ['50%', '65%'],//仪表盘位置
+            detail: {
+              formatter: '{value}%',
+              textStyle: {
+              fontSize: 13
+            }
+            },
+            axisTick: {show: false},
+            axisLabel: {show: false},
+            data: [{value: 50}],
+            splitLine: {show: true, length: 10},
+            axisLine: {
+              lineStyle: {
+                color: [[0.6, '#2aab55'], [1, '#e44444']],
+                width: 10
+              },
+            },
+            pointer: {width: 4},
+            startAngle: 180,
+            endAngle: 0
+          }
+        ]
+      }
+      heat.setOption(heatOption, true);
+      // 涨跌对比
+      let option2 = {
+        title: {
+          text: '涨跌分布',
+          x:'left',
+          y:'top',
+          textStyle: {fontSize: 13, color: '#2c3e50'}
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          top: "15%",
+          bottom: "0%",
+          containLabel: true
+        },
+        xAxis: {
+          type: 'category',
+          show: false,
+          data: this.generateRandomArr(50, 0, 100)
+        },
+        yAxis: { type: 'value', position: 'right', axisLine: { show: false },
+          axisTick: { show: false },
+          splitNumber: 2,
+          splitLine:{ show:true, lineStyle:{ type:'dashed' } }
+        },
+        series: [{
+          name: '涨',
+          data: this.generateRandomArr(50, 0, 200),
+          type: 'line',
+          symbol: 'none',
+          itemStyle: {
+            normal: {lineStyle: {width: 1.5}}
+          }
+        },
+        { 
+          name: '跌',
+          data: this.generateRandomArr(50, 0, 200),
+          type: 'line',
+          symbol: 'none',
+          itemStyle: {
+            normal: {lineStyle: {width: 1.5}}
+          }
+        }]
+      };
+      myChart2.setOption(option2, true);
+      myChart3.setOption(option2, true);
+      myChart4.setOption(option2, true);
+      myChart5.setOption(option2, true);
+
+      setInterval(function () {
+          heatOption.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
+          heat.setOption(heatOption, true);
+      },2000);
+    }, 
+  }
 }
 </script>
 
@@ -773,11 +992,19 @@ export default {
   display: flex;
   justify-content: flex-start;
 }
-
+.el-progress{
+  margin: 0 auto;
+}
 
 
 </style>
 <style>
+  .regular-size {
+    font-size: 13px;
+    width: 100%;
+    text-align: center;
+    display: block;
+  }
   .nav-tabs {
     font-size: 16px;
    
@@ -803,5 +1030,25 @@ export default {
 }
 .gains{
   vertical-align: middle !important;
+}
+/* .card-header{
+  height: 100% !important;
+} */
+.chartStyle{
+  width: 100%;
+  height: 150px;
+  padding-left: 15px;
+  display: flex;
+  justify-content: center;
+}
+.clearfix::before{
+  content: ”;
+  display: table;
+}
+.selectDate{
+  margin: 10px 10px 25px;
+}
+.el-input__inner{
+  border: none;
 }
 </style>
