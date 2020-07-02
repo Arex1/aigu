@@ -7,7 +7,62 @@
         策略精选
         <a href="#">常见问题></a>
       </h4>
-      <b-card style="max-width: 57rem;" class="mb-2">
+      <b-card style="max-width: 57rem;" class="mb-2 wow animate__animated animate__fadeInLeft">
+        <b-row class="card-title">
+          <b-col md="8" class="stock-name">
+            <a href="/shopdetail">美玲时钟</a>
+          </b-col>
+          <b-col md="4" class="author">策略作者:
+            <a href="#">
+              <b-avatar size="1.5rem"></b-avatar>小车
+            </a>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col md="8">
+            <div class="body-left__legend" data-backtestid="c679fbbb383ab428ddd1506c7850aa4a"> 
+              <div class="legend-box"> 
+                <span class="legend-symbol"></span> 
+                <span class="legend-text" title="策略收益">策略收益</span> 
+              </div>  
+              <div class="legend-box"> 
+                <span class="legend-symbol"></span>
+                <span class="legend-text" title="沪深300">沪深300</span> 
+              </div>  
+            </div>
+            <div id="myChart" :style="{width: '90%', height: '315px'}"></div>
+          </b-col>
+          <b-col md="4" class="stack-info">
+            <div class="body-right__data"> 
+              <div class="right__data-item full-width"> 
+                <p class="data-item-title">累计收益</p> 
+                <p class="data-item-data red algorithmReturn">107.01%</p> 
+              </div> 
+              <div class="right__data-item dashed-right dashed-bottom"> 
+                <p class="data-item-title">最近一个月</p> 
+                <p class="data-item-data">15.97%</p> 
+              </div> 
+              <div class="right__data-item dashed-bottom"> 
+                <p class="data-item-title">最近三个月</p> 
+                <p class="data-item-data">88.43%</p> 
+              </div> 
+              <div class="right__data-item dashed-right"> 
+                <p class="data-item-title">最近六个月</p> 
+                <p class="data-item-data">109.29%</p> 
+              </div> 
+              <div class="right__data-item"> 
+                <p class="data-item-title">适合资金</p>
+                <p class="data-item-data">50万-100万</p>
+              </div>
+              <div class="body-right__btn">
+                <button class="right__btn-order">立即订阅</button>
+                <button class="right__btn-refer">免费资讯</button>
+              </div>
+            </div>
+          </b-col>
+        </b-row>
+      </b-card>
+      <b-card style="max-width: 57rem;" class="mb-2 wow animate__animated animate__fadeInRight">
         <b-row class="card-title">
           <b-col md="8" class="stock-name">
             <a href="/shopdetail">美玲时钟</a>
@@ -67,7 +122,8 @@
 </template>
 
 <script>
-import echarts from 'echarts'
+import echarts from 'echarts';
+import {WOW} from 'wowjs'
 export default {
   data () {
     return {
@@ -77,6 +133,13 @@ export default {
   },
   mounted(){
     this.drawLine();
+    // 在项目加载完成之后初始化wow
+    this.$nextTick(() => {
+      let wow = new WOW({
+        live:false
+      })
+      wow.init()
+    })
   },
   methods: {
     drawLine(){

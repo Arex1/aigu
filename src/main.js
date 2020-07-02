@@ -8,7 +8,10 @@ import echarts from 'echarts'
 import vueAxios from 'vue-axios'
 import axios from 'axios'
 import ElementUI from 'element-ui'
+import animate from 'animate.css'
 import 'element-ui/lib/theme-chalk/index.css'
+import { HappyScroll } from 'vue-happy-scroll'
+import 'vue-happy-scroll/docs/happy-scroll.css'
 
 
 Vue.config.productionTip = false
@@ -23,6 +26,9 @@ Vue.use(IconsPlugin)
 Vue.prototype.$echarts = echarts
 Vue.use(vueAxios, axios)
 Vue.use(ElementUI)
+// 全局使用animate动画
+Vue.use(animate)
+Vue.component('happy-scroll', HappyScroll)
 
 import HeaderBar from './components/HeaderBar.vue'
 import Index from './view/Index.vue'
@@ -38,6 +44,7 @@ import Post from './view/Myhome/Post.vue'
 import Reply from './view/Myhome/Reply.vue'
 import Setting from './view/Myhome/Setting.vue'
 import Logout from './view/Myhome/Logout.vue'
+
 
 
 const router = new VueRouter({
