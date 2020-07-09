@@ -1,9 +1,9 @@
 <template>
   <div>
-    <b-card no-body>
-      <b-tabs pills card vertical nav-class="nav-tabs" active-nav-item-class='activate-li-tab'>
-        <b-tab title="数据分析" :active="true">
-          <div class="data-analysis-header shadow clearfix">
+    <b-card no-body class="market-card">
+      <b-tabs pills card vertical nav-class="nav-tabs" active-nav-item-class='activate-li-tab' class="market-data">
+        <b-tab title="数据分析">
+          <div class="data-analysis-header clearfix">
             <div class="selectDate">
               <el-date-picker
                 v-model="value2"
@@ -54,60 +54,31 @@
               </b-col>
             </b-row>
           </div>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
-          <br>
         </b-tab>
-        <b-tab title="赚钱效应" >
+        <b-tab title="赚钱效应" :active="true">
           <b-tabs content-class="mt-3">
             <b-tab title="效应一">
-              <b-alert show>仅供参考</b-alert>
-              <!-- 成交额，日期，评论区 -->
-              <b-form @submit="onSubmit" v-if="true">
-                <b-row>
-                  <b-col sm="3">
-                    <b-form-group label-cols="5" label-cols-lg="4" label-size="sm" label="类型:" label-for="select-buy-sale">
-                      <b-form-select size="sm" id="select-buy-sale" v-model="selected" :options="options"></b-form-select>
-                    </b-form-group>
-                  </b-col>
-                  <b-col sm="3">
-                    <b-form-group label-cols="4" label-cols-lg="3" label-size="sm" label="日期:" label-for="second-date">
-                      <b-form-input id="second-date" size="sm" placeholder="2020-05-14"></b-form-input>
-                    </b-form-group>
-                  </b-col>
-                  <b-col sm="6">
-                    <b-form-group label-cols="3" label-cols-lg="2" label-size="sm" label="评论区:" label-for="input-sm">
-                      <b-form-input id="input-sm" size="sm"></b-form-input>
-                    </b-form-group>
-                  </b-col>
-                </b-row>
-              </b-form>
+              <b-row>
+                <b-col md="9">
+                  <b-form-group label="类型">
+                    <b-form-radio-group v-model="selectedMakeMoney" :options="makeMoneyOptions" name="radio-inline" ></b-form-radio-group>
+                  </b-form-group>
+                  <b-form-group label="大佬评论">
+                    <b-form-textarea id="textarea" v-model="commentsMakeMoney" rows="3" max-rows="6" disabled></b-form-textarea>
+                  </b-form-group>
+                </b-col>
+                <b-col md="3">
+                  <b-calendar v-model="value" :min="min" :max="max" locale="cn"></b-calendar>
+                </b-col>
+              </b-row>
               <!-- 表格部分 -->
               <!-- 成交额表 -->
-              <b-table-simple v-if="selected == '1'" outlined bordered small caption-top responsive table-class="positions-table" thead-tr-class="positions-head-table" tbody-tr-class="positions-body-table">
-                <caption>成交额信息对照表:</caption>
-                <colgroup><col><col></colgroup>
-                <colgroup><col><col><col></colgroup>
-                <colgroup><col><col></colgroup>
+              <b-table-simple outlined bordered small caption-top responsive table-class="positions-table" thead-tr-class="positions-head-table" tbody-tr-class="positions-body-table">
+                <caption>{{tableValue[selectedMakeMoney].category}}信息对照表:</caption>
                 <b-thead head-variant="dark">
-                  <b-tr>
+                  <b-tr class="text-center gains">
                     <b-th>涨幅</b-th>
-                    <b-th>成交额/亿</b-th>
+                    <b-th>{{tableValue[selectedMakeMoney].category}}</b-th>
                     <b-th>类别</b-th>
                     <b-th>个数</b-th>
                     <b-th>实际占比</b-th>
@@ -118,233 +89,15 @@
                     <b-th>次日涨幅</b-th>
                   </b-tr>
                 </b-thead>
-                <b-tbody>
-                  <b-tr>
-                    <b-th rowspan="10" class="text-center gains">10%</b-th>
-                    <b-th>总个数</b-th>
-                    <b-td>56</b-td>
-                    <b-td>22</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>30+</b-th>
-                    <b-td>46</b-td>
-                    <b-td variant="warning">18</b-td>
-                    <b-td>50</b-td>
-                    <b-td>61</b-td>
-                    <b-td variant="danger">15</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>10-20</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>10-20</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>7-10</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>5-7</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>2-5</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>1-2</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>0.5-1</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>&lt;0.5</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th rowspan="10" class="text-center gains">10%</b-th>
-                    <b-th>总个数</b-th>
-                    <b-td>56</b-td>
-                    <b-td>22</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>30+</b-th>
-                    <b-td>46</b-td>
-                    <b-td variant="warning">18</b-td>
-                    <b-td>50</b-td>
-                    <b-td>61</b-td>
-                    <b-td variant="danger">15</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>10-20</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>10-20</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>7-10</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>5-7</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>2-5</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>1-2</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>0.5-1</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
-                  </b-tr>
-                  <b-tr>
-                    <b-th>&lt;0.5</b-th>
-                    <b-td>51</b-td>
-                    <b-td>27</b-td>
-                    <b-td>38</b-td>
-                    <b-td>69</b-td>
-                    <b-td>28</b-td>
-                    <b-td>43</b-td>
-                    <b-td variant="success">72</b-td>
-                    <b-td>23</b-td>
+                <b-tbody v-for="(item, index) in tableValue[selectedMakeMoney].tableValue" :key="index" class="text-center gains">
+                  <b-th rowspan="11" class="text-center gains">{{item.firstIndex}}</b-th>
+                  <b-tr v-for="(i, sindex) in item.seconedIndex" :key="sindex">
+                    <b-td v-for="(j, tindex) in i" :key="tindex">{{j}}</b-td>
                   </b-tr>
                 </b-tbody>
               </b-table-simple>
               <!-- 总市值表 -->
-              <b-table-simple v-if="selected == '2'" outlined bordered small caption-top responsive table-class="positions-table" thead-tr-class="positions-head-table" tbody-tr-class="positions-body-table">
+              <b-table-simple v-if="false" outlined bordered small caption-top responsive table-class="positions-table" thead-tr-class="positions-head-table" tbody-tr-class="positions-body-table">
                 <caption>总市值信息对照表:</caption>
                 <colgroup><col><col></colgroup>
                 <colgroup><col><col><col></colgroup>
@@ -487,7 +240,7 @@
                 </b-tbody>
               </b-table-simple>
               <!-- 涨幅表 -->
-              <b-table-simple v-if="selected == '3'" outlined bordered small caption-top responsive table-class="positions-table" thead-tr-class="positions-head-table" tbody-tr-class="positions-body-table">
+              <b-table-simple v-if="false" outlined bordered small caption-top responsive table-class="positions-table" thead-tr-class="positions-head-table" tbody-tr-class="positions-body-table">
                 <caption>涨幅表信息对照表:</caption>
                 <colgroup><col><col></colgroup>
                 <colgroup><col><col><col></colgroup>
@@ -589,29 +342,6 @@
                   </b-tr>
                 </b-tbody>
               </b-table-simple>
-            </b-tab>
-            <b-tab title="效应二" lazy>
-              <b-alert show>仅供参考</b-alert>
-              <!-- 成交额，日期，评论区 -->
-              <b-form @submit="onSubmit" v-if="true">
-                <b-row>
-                  <b-col sm="3">
-                    <b-form-group label-cols="5" label-cols-lg="4" label-size="sm" label="总市值:" label-for="select-buy-sale">
-                      <b-form-select size="sm" id="select-buy-sale" v-model="selected" :options="options"></b-form-select>
-                    </b-form-group>
-                  </b-col>
-                  <b-col sm="3">
-                    <b-form-group label-cols="4" label-cols-lg="3" label-size="sm" label="日期:" label-for="input-sm">
-                      <b-form-input id="input-sm" size="sm" placeholder="2020-05-14"></b-form-input>
-                    </b-form-group>
-                  </b-col>
-                  <b-col sm="6">
-                    <b-form-group label-cols="3" label-cols-lg="2" label-size="sm" label="评论区:" label-for="input-sm">
-                      <b-form-input id="input-sm" size="sm"></b-form-input>
-                    </b-form-group>
-                  </b-col>
-                </b-row>
-              </b-form>
             </b-tab>
           </b-tabs>
         </b-tab>
@@ -733,15 +463,32 @@
             </b-tbody>
           </b-table-simple>
         </b-tab>
-        <b-tab title="股票池"><b-card-text>Tab contents 4</b-card-text></b-tab>
+        <b-tab title="股票池">
+          <b-nav tabs class="mb-4">
+            <b-nav-item v-for="(item, index) in StockPoolOptions" :key="index" :active="item.isActive" @click="changeTable(index)">{{item.tabName}}</b-nav-item>
+          </b-nav>
+          <!-- 股票池表格区域 -->
+          <b-table hover :items="StockPoolItems" :fields="StockPoolFields" :sort-by.sync="sortBy"
+            :sort-desc.sync="sortDesc" table-class="positions-table" thead-tr-class="positions-head-table" tbody-tr-class="positions-body-table"></b-table>
+        </b-tab>
       </b-tabs>
-  </b-card>
+    </b-card>
   </div>
 </template>
 <script>
 // import echarts from 'echarts'
 export default {
   data() {
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    // 15th two months prior
+    const minDate = new Date(today)
+    minDate.setMonth(minDate.getMonth() - 2)
+    minDate.setDate(15)
+    // 15th in two months
+    const maxDate = new Date(today)
+    maxDate.setMonth(maxDate.getMonth() + 2)
+    maxDate.setDate(15)
     return {
       value2: Date.now(),
       pickerOptions1: {
@@ -807,12 +554,568 @@ export default {
         },
         
       ],
-      selected: '1',
-      options: [
-          { value: '1', text: '成交额' },
-          { value: '2', text: '总市值' },
-          { value: '3', text: '涨幅' }
-        ],
+      selectedMakeMoney: 1,
+      makeMoneyOptions: [
+        { value: 0, text: '成交额' },
+        { value: 1, text: '股价' },
+        { value: 2, text: '总市值' },
+        { value: 3, text: '流通市值' }
+      ],
+      tableValue: [
+        {
+          category: '成交额',
+          tableValue: [
+            {
+              firstIndex: '10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['20+', 12, 32, 43, '', 25, 76, '', 86],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 86,],
+                ['7~10', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['5~7', 12, 32, 43, '', 25, 76, '', 23],
+                ['2~5', 12, 32, 43, '', 25, 76, '', 23],
+                ['1~2', 12, 32, 43, 23, 25,'', 86, 23],
+                ['0.5~1', 12, 32, 43, '', 76, '', 86, 23],
+                ['<0.5', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '7%~10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['20+', 12, 32, 43, '', 25, 76, '', 86],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 86,],
+                ['7~10', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['5~7', 12, 32, 43, '', 25, 76, '', 23],
+                ['2~5', 12, 32, 43, '', 25, 76, '', 23],
+                ['1~2', 12, 32, 43, 23, 25,'', 86, 23],
+                ['0.5~1', 12, 32, 43, '', 76, '', 86, 23],
+                ['<0.5', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '5%~7%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['20+', 12, 32, 43, '', 25, 76, '', 86],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 86,],
+                ['7~10', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['5~7', 12, 32, 43, '', 25, 76, '', 23],
+                ['2~5', 12, 32, 43, '', 25, 76, '', 23],
+                ['1~2', 12, 32, 43, 23, 25,'', 86, 23],
+                ['0.5~1', 12, 32, 43, '', 76, '', 86, 23],
+                ['<0.5', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '3%~5%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['20+', 12, 32, 43, '', 25, 76, '', 86],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 86,],
+                ['7~10', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['5~7', 12, 32, 43, '', 25, 76, '', 23],
+                ['2~5', 12, 32, 43, '', 25, 76, '', 23],
+                ['1~2', 12, 32, 43, 23, 25,'', 86, 23],
+                ['0.5~1', 12, 32, 43, '', 76, '', 86, 23],
+                ['<0.5', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '<-10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['20+', 12, 32, 43, '', 25, 76, '', 86],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 86,],
+                ['7~10', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['5~7', 12, 32, 43, '', 25, 76, '', 23],
+                ['2~5', 12, 32, 43, '', 25, 76, '', 23],
+                ['1~2', 12, 32, 43, 23, 25,'', 86, 23],
+                ['0.5~1', 12, 32, 43, '', 76, '', 86, 23],
+                ['<0.5', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '-7%~-10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['20+', 12, 32, 43, '', 25, 76, '', 86],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 86,],
+                ['7~10', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['5~7', 12, 32, 43, '', 25, 76, '', 23],
+                ['2~5', 12, 32, 43, '', 25, 76, '', 23],
+                ['1~2', 12, 32, 43, 23, 25,'', 86, 23],
+                ['0.5~1', 12, 32, 43, '', 76, '', 86, 23],
+                ['<0.5', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '-5%~-7%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['20+', 12, 32, 43, '', 25, 76, '', 86],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 86,],
+                ['7~10', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['5~7', 12, 32, 43, '', 25, 76, '', 23],
+                ['2~5', 12, 32, 43, '', 25, 76, '', 23],
+                ['1~2', 12, 32, 43, 23, 25,'', 86, 23],
+                ['0.5~1', 12, 32, 43, '', 76, '', 86, 23],
+                ['<0.5', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '-3%~5%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['20+', 12, 32, 43, '', 25, 76, '', 86],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 86,],
+                ['7~10', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['5~7', 12, 32, 43, '', 25, 76, '', 23],
+                ['2~5', 12, 32, 43, '', 25, 76, '', 23],
+                ['1~2', 12, 32, 43, 23, 25,'', 86, 23],
+                ['0.5~1', 12, 32, 43, '', 76, '', 86, 23],
+                ['<0.5', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            }
+          ]
+        },
+        {
+          category: '股价',
+          tableValue: [
+            {
+              firstIndex: '10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['50+', 12, 32, 43, '', 25, 76, '', 86],
+                ['40~50', 12, 32, 43, '', 25, 76, '', 86,],
+                ['30~40', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['20~30', 12, 32, 43, '', 25, 76, '', 23],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 23],
+                ['5~10', 12, 32, 43, 23, 25,'', 86, 23],
+                ['3~5', 12, 32, 43, '', 76, '', 86, 23],
+                ['<3', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '7%~10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['50+', 12, 32, 43, '', 25, 76, '', 86],
+                ['40~50', 12, 32, 43, '', 25, 76, '', 86,],
+                ['30~40', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['20~30', 12, 32, 43, '', 25, 76, '', 23],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 23],
+                ['5~10', 12, 32, 43, 23, 25,'', 86, 23],
+                ['3~5', 12, 32, 43, '', 76, '', 86, 23],
+                ['<3', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '5%~7%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['50+', 12, 32, 43, '', 25, 76, '', 86],
+                ['40~50', 12, 32, 43, '', 25, 76, '', 86,],
+                ['30~40', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['20~30', 12, 32, 43, '', 25, 76, '', 23],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 23],
+                ['5~10', 12, 32, 43, 23, 25,'', 86, 23],
+                ['3~5', 12, 32, 43, '', 76, '', 86, 23],
+                ['<3', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '3%~5%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['50+', 12, 32, 43, '', 25, 76, '', 86],
+                ['40~50', 12, 32, 43, '', 25, 76, '', 86,],
+                ['30~40', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['20~30', 12, 32, 43, '', 25, 76, '', 23],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 23],
+                ['5~10', 12, 32, 43, 23, 25,'', 86, 23],
+                ['3~5', 12, 32, 43, '', 76, '', 86, 23],
+                ['<3', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '<-10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['50+', 12, 32, 43, '', 25, 76, '', 86],
+                ['40~50', 12, 32, 43, '', 25, 76, '', 86,],
+                ['30~40', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['20~30', 12, 32, 43, '', 25, 76, '', 23],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 23],
+                ['5~10', 12, 32, 43, 23, 25,'', 86, 23],
+                ['3~5', 12, 32, 43, '', 76, '', 86, 23],
+                ['<3', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '-7%~-10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['50+', 12, 32, 43, '', 25, 76, '', 86],
+                ['40~50', 12, 32, 43, '', 25, 76, '', 86,],
+                ['30~40', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['20~30', 12, 32, 43, '', 25, 76, '', 23],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 23],
+                ['5~10', 12, 32, 43, 23, 25,'', 86, 23],
+                ['3~5', 12, 32, 43, '', 76, '', 86, 23],
+                ['<3', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '-5%~-7%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['50+', 12, 32, 43, '', 25, 76, '', 86],
+                ['40~50', 12, 32, 43, '', 25, 76, '', 86,],
+                ['30~40', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['20~30', 12, 32, 43, '', 25, 76, '', 23],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 23],
+                ['5~10', 12, 32, 43, 23, 25,'', 86, 23],
+                ['3~5', 12, 32, 43, '', 76, '', 86, 23],
+                ['<3', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '-3%~5%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['50+', 12, 32, 43, '', 25, 76, '', 86],
+                ['40~50', 12, 32, 43, '', 25, 76, '', 86,],
+                ['30~40', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['20~30', 12, 32, 43, '', 25, 76, '', 23],
+                ['10~20', 12, 32, 43, '', 25, 76, '', 23],
+                ['5~10', 12, 32, 43, 23, 25,'', 86, 23],
+                ['3~5', 12, 32, 43, '', 76, '', 86, 23],
+                ['<3', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            }
+          ]
+        },
+        {
+          category: '总市值',
+          tableValue: [
+            {
+              firstIndex: '10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['1000+', 12, 32, 43, '', 25, 76, '', 86],
+                ['500~1000', 12, 32, 43, '', 25, 76, '', 86,],
+                ['200~500', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, '', 25, 76, '', 23],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, 23, 25,'', 86, 23],
+                ['30~40', 12, 32, 43, '', 76, '', 86, 23],
+                ['<30', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '7%~10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['1000+', 12, 32, 43, '', 25, 76, '', 86],
+                ['500~1000', 12, 32, 43, '', 25, 76, '', 86,],
+                ['200~500', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, '', 25, 76, '', 23],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, 23, 25,'', 86, 23],
+                ['30~40', 12, 32, 43, '', 76, '', 86, 23],
+                ['<30', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '5%~7%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['1000+', 12, 32, 43, '', 25, 76, '', 86],
+                ['500~1000', 12, 32, 43, '', 25, 76, '', 86,],
+                ['200~500', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, '', 25, 76, '', 23],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, 23, 25,'', 86, 23],
+                ['30~40', 12, 32, 43, '', 76, '', 86, 23],
+                ['<30', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '3%~5%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['1000+', 12, 32, 43, '', 25, 76, '', 86],
+                ['500~1000', 12, 32, 43, '', 25, 76, '', 86,],
+                ['200~500', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, '', 25, 76, '', 23],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, 23, 25,'', 86, 23],
+                ['30~40', 12, 32, 43, '', 76, '', 86, 23],
+                ['<30', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '<-10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['1000+', 12, 32, 43, '', 25, 76, '', 86],
+                ['500~1000', 12, 32, 43, '', 25, 76, '', 86,],
+                ['200~500', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, '', 25, 76, '', 23],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, 23, 25,'', 86, 23],
+                ['30~40', 12, 32, 43, '', 76, '', 86, 23],
+                ['<30', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '-7%~-10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['1000+', 12, 32, 43, '', 25, 76, '', 86],
+                ['500~1000', 12, 32, 43, '', 25, 76, '', 86,],
+                ['200~500', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, '', 25, 76, '', 23],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, 23, 25,'', 86, 23],
+                ['30~40', 12, 32, 43, '', 76, '', 86, 23],
+                ['<30', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '-5%~-7%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['1000+', 12, 32, 43, '', 25, 76, '', 86],
+                ['500~1000', 12, 32, 43, '', 25, 76, '', 86,],
+                ['200~500', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, '', 25, 76, '', 23],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, 23, 25,'', 86, 23],
+                ['30~40', 12, 32, 43, '', 76, '', 86, 23],
+                ['<30', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '-3%~5%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['1000+', 12, 32, 43, '', 25, 76, '', 86],
+                ['500~1000', 12, 32, 43, '', 25, 76, '', 86,],
+                ['200~500', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, '', 25, 76, '', 23],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, 23, 25,'', 86, 23],
+                ['30~40', 12, 32, 43, '', 76, '', 86, 23],
+                ['<30', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            }
+          ]
+        },
+        {
+          category: '流通市值',
+          tableValue: [
+            {
+              firstIndex: '10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['500+', 12, 32, 43, '', 25, 76, '', 86],
+                ['200~500', 12, 32, 43, '', 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, '', 25, 76, '', 23],
+                ['20~40', 12, 32, 43, 23, 25,'', 86, 23],
+                ['10~20', 12, 32, 43, '', 76, '', 86, 23],
+                ['<10', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '7%~10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['500+', 12, 32, 43, '', 25, 76, '', 86],
+                ['200~500', 12, 32, 43, '', 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, '', 25, 76, '', 23],
+                ['20~40', 12, 32, 43, 23, 25,'', 86, 23],
+                ['10~20', 12, 32, 43, '', 76, '', 86, 23],
+                ['<10', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '5%~7%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['500+', 12, 32, 43, '', 25, 76, '', 86],
+                ['200~500', 12, 32, 43, '', 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, '', 25, 76, '', 23],
+                ['20~40', 12, 32, 43, 23, 25,'', 86, 23],
+                ['10~20', 12, 32, 43, '', 76, '', 86, 23],
+                ['<10', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '3%~5%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['500+', 12, 32, 43, '', 25, 76, '', 86],
+                ['200~500', 12, 32, 43, '', 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, '', 25, 76, '', 23],
+                ['20~40', 12, 32, 43, 23, 25,'', 86, 23],
+                ['10~20', 12, 32, 43, '', 76, '', 86, 23],
+                ['<10', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '<-10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['500+', 12, 32, 43, '', 25, 76, '', 86],
+                ['200~500', 12, 32, 43, '', 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, '', 25, 76, '', 23],
+                ['20~40', 12, 32, 43, 23, 25,'', 86, 23],
+                ['10~20', 12, 32, 43, '', 76, '', 86, 23],
+                ['<10', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '-7%~-10%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['500+', 12, 32, 43, '', 25, 76, '', 86],
+                ['200~500', 12, 32, 43, '', 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, '', 25, 76, '', 23],
+                ['20~40', 12, 32, 43, 23, 25,'', 86, 23],
+                ['10~20', 12, 32, 43, '', 76, '', 86, 23],
+                ['<10', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '-5%~-7%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['500+', 12, 32, 43, '', 25, 76, '', 86],
+                ['200~500', 12, 32, 43, '', 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, '', 25, 76, '', 23],
+                ['20~40', 12, 32, 43, 23, 25,'', 86, 23],
+                ['10~20', 12, 32, 43, '', 76, '', 86, 23],
+                ['<10', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            },
+            {
+              firstIndex: '-3%~5%',
+              seconedIndex: [
+                ['总个数', 12, 32, 43, '', 25, 76, '', 86],
+                ['500+', 12, 32, 43, '', 25, 76, '', 86],
+                ['200~500', 12, 32, 43, '', 25, 76, '', 86,],
+                ['100~200', 12, 32, 43, 11, 25, 76, '', 86,],
+                ['60~100', 12, 32, 43, '', 25, 76, '', 23],
+                ['40~60', 12, 32, 43, '', 25, 76, '', 23],
+                ['20~40', 12, 32, 43, 23, 25,'', 86, 23],
+                ['10~20', 12, 32, 43, '', 76, '', 86, 23],
+                ['<10', 12, 32, 43, '', 76, '', 86, 23]
+              ]
+            }
+          ]
+        },
+      ],
+      commentsMakeMoney: "“投资者尤其是中小投资者，应坚守理性投资的理念，既要对中国经济和资本市场的发展充满信心，又要认识到市场的风险和不确定性。”清华大学国家金融研究院副院长、上市公司研究中心主任王娴表示新时代证券首席经济学家潘向东向中新网记者表示，疫情发生之后，中国货币政策宽松，金融机构间资金价格低廉，M2、社会融资增速大幅上升，宏观流动性充裕，中国经济恢复良好，PPI增速触底反弹，企业盈利改善。“3月下旬以来，大盘中枢上移吸引社会资金进入股市，以及近期偏股型基金发行规模上升就是证明。”",
+      value: '',
+      min: minDate,
+      max: maxDate,
+      // ----------------
+      // 股票池参数
+      StockPoolOptions: [
+        {
+          tabName: '涨停池',
+          isActive: true
+        },
+        {
+          tabName: '炸板池',
+          isActive: false
+        },
+        {
+          tabName: '跌停池',
+          isActive: false
+        },
+        {
+          tabName: '强势池',
+          isActive: false
+        },
+        {
+          tabName: '昨日涨停池',
+          isActive: false
+        }
+      ],
+      StockPoolFields: [
+          {
+            key: 'index',
+            label: "序号",
+            sortable: true
+          },
+          {
+            key: 'stockName',
+            label: "股票名称",
+            sortable: false
+          },
+          {
+            key: "stockCode",
+            label: "股票代码",
+            sortable: false
+          },
+          {
+            key: 'newestPrice',
+            label: '最新价',
+            sortable: true
+          },
+          {
+            key: 'applies',
+            label: '涨跌幅',
+            sortable: true
+          },
+          {
+            key: 'sharePrice',
+            label: '流通市值',
+            sortable: true
+          },
+          {
+            key: 'totalValue',
+            label: '总市值',
+            sortable: true
+          },
+          {
+            key: 'finalSealingTime',
+            label: '最后封板时间',
+            sortable: true
+          },
+          {
+            key: 'evenPlateNumber',
+            label: '连板数',
+            sortable: true
+          }
+      ],
+      StockPoolItems: [
+        { index: 202, stockName: "兆一创新", stockCode: 603976, newestPrice: 22.34, applies: "+10.00%",  sharePrice: "82.1亿", totalValue: "47.12亿", finalSealingTime: "11:32:12", evenPlateNumber: "23"},
+        { index: 123, stockName: "秦闻科技", stockCode: 603271, newestPrice: 98.34, applies: "+40.00%",  sharePrice: "72.1亿", totalValue: "947.12亿", finalSealingTime: "11:33:12", evenPlateNumber: "22"},
+        { index: 532, stockName: "三花智控", stockCode: 602912, newestPrice: 25.24, applies: "+23.00%",  sharePrice: "72.1亿", totalValue: "87.12亿", finalSealingTime: "11:34:12", evenPlateNumber: "21"},
+        { index: 122, stockName: "长电科技", stockCode: 604342, newestPrice: 12.34, applies: "+12.00%",  sharePrice: "2.1亿", totalValue: "97.12亿", finalSealingTime: "11:35:13", evenPlateNumber: "32"},
+        { index: 422, stockName: "花生科技", stockCode: 698356, newestPrice: 63.34, applies: "+32.00%",  sharePrice: "72.1亿", totalValue: "87.12亿", finalSealingTime: "11:32:15", evenPlateNumber: "1"},
+        { index: 242, stockName: "圣康加深", stockCode: 691772, newestPrice: 34.34, applies: "+9.00%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+      ],
+      sortBy: 'index', //默认排序字段
+      sortDesc: true,  //默认排序方式，降序
     }
   },
   mounted(){
@@ -982,7 +1285,68 @@ export default {
           heatOption.series[0].data[0].value = (Math.random() * 100).toFixed(2) - 0;
           heat.setOption(heatOption, true);
       },2000);
-    }, 
+    },
+    // 股票池改变表格
+    changeTable(index){
+      for (let index = 0; index < this.StockPoolOptions.length; index++) {
+        this.StockPoolOptions[index].isActive = false;
+      }
+      this.StockPoolOptions[index].isActive = true;
+      if(index == 0) {
+        this.StockPoolItems = [
+          { index: 202, stockName: "兆一创新", stockCode: 603976, newestPrice: 22.34, applies: "+10.00%",  sharePrice: "82.1亿", totalValue: "47.12亿", finalSealingTime: "11:32:12", evenPlateNumber: "23"},
+          { index: 123, stockName: "秦闻科技", stockCode: 603271, newestPrice: 98.34, applies: "+40.00%",  sharePrice: "72.1亿", totalValue: "947.12亿", finalSealingTime: "11:33:12", evenPlateNumber: "22"},
+          { index: 532, stockName: "三花智控", stockCode: 602912, newestPrice: 25.24, applies: "+23.00%",  sharePrice: "72.1亿", totalValue: "87.12亿", finalSealingTime: "11:34:12", evenPlateNumber: "21"},
+          { index: 122, stockName: "长电科技", stockCode: 604342, newestPrice: 12.34, applies: "+12.00%",  sharePrice: "2.1亿", totalValue: "97.12亿", finalSealingTime: "11:35:13", evenPlateNumber: "32"},
+          { index: 422, stockName: "花生科技", stockCode: 698356, newestPrice: 63.34, applies: "+32.00%",  sharePrice: "72.1亿", totalValue: "87.12亿", finalSealingTime: "11:32:15", evenPlateNumber: "1"},
+          { index: 242, stockName: "圣康加深", stockCode: 691772, newestPrice: 34.34, applies: "+9.00%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+        ]
+      } else if(index==1) {
+        this.StockPoolItems = [
+          { index: 11, stockName: "长电科技", stockCode: "sz300002", newestPrice: 22.34, applies: "+1.00%",  sharePrice: "82.1亿", totalValue: "47.12亿", finalSealingTime: "11:32:12", evenPlateNumber: "23"},
+          { index: 22, stockName: "神州太岳", stockCode: "sz300003", newestPrice: 98.34, applies: "+21.00%",  sharePrice: "72.1亿", totalValue: "947.12亿", finalSealingTime: "11:33:12", evenPlateNumber: "22"},
+          { index: 342, stockName: "乐普医疗", stockCode: 'sz300041', newestPrice: 25.24, applies: "+0.10%",  sharePrice: "72.1亿", totalValue: "87.12亿", finalSealingTime: "11:34:12", evenPlateNumber: "21"},
+          { index: 123, stockName: "南风股份", stockCode: "sz300021", newestPrice: 12.34, applies: "+2.40%",  sharePrice: "2.1亿", totalValue: "97.12亿", finalSealingTime: "11:35:13", evenPlateNumber: "32"},
+          { index: 432, stockName: "莱美药业", stockCode: "sz300012", newestPrice: 63.34, applies: "+3.80%",  sharePrice: "72.1亿", totalValue: "87.12亿", finalSealingTime: "11:32:15", evenPlateNumber: "1"},
+          { index: 262, stockName: "安科生物", stockCode: "sz300098", newestPrice: 34.34, applies: "+12.40%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+          { index: 1234, stockName: "天海防务", stockCode: "sz300023", newestPrice: 34.34, applies: "+12.40%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+          { index: 853, stockName: "丁汉技术", stockCode: "sz300053", newestPrice: 34.34, applies: "+12.40%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+        ]
+      } else if(index==2) {
+        this.StockPoolItems = [
+          { index: 43221, stockName: "中灰股份", stockCode: "sz300002", newestPrice: 22.34, applies: "+1.00%",  sharePrice: "82.1亿", totalValue: "47.12亿", finalSealingTime: "11:32:12", evenPlateNumber: "23"},
+          { index: 19823, stockName: "华测检测", stockCode: "sz300003", newestPrice: 98.34, applies: "+21.00%",  sharePrice: "72.1亿", totalValue: "947.12亿", finalSealingTime: "11:33:12", evenPlateNumber: "22"},
+          { index: 62341, stockName: "亿纬锂能", stockCode: 'sz300041', newestPrice: 25.24, applies: "+0.10%",  sharePrice: "72.1亿", totalValue: "87.12亿", finalSealingTime: "11:34:12", evenPlateNumber: "21"},
+          { index: 23151, stockName: "华谊兄弟", stockCode: "sz300021", newestPrice: 12.34, applies: "+2.40%",  sharePrice: "2.1亿", totalValue: "97.12亿", finalSealingTime: "11:35:13", evenPlateNumber: "32"},
+          { index: 13415, stockName: "天龙广电", stockCode: "sz300012", newestPrice: 63.34, applies: "+3.80%",  sharePrice: "72.1亿", totalValue: "87.12亿", finalSealingTime: "11:32:15", evenPlateNumber: "1"},
+          { index: 12414, stockName: "爱尔眼科", stockCode: "sz300098", newestPrice: 34.34, applies: "+12.40%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+          { index: 12459, stockName: "金龙科技", stockCode: "sz300023", newestPrice: 34.34, applies: "+12.40%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+          { index: 83778, stockName: "红日药业", stockCode: "sz300053", newestPrice: 34.34, applies: "+12.40%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+        ]
+      } else if(index==3) {
+        this.StockPoolItems = [
+          { index: 83784, stockName: "九州电器", stockCode: "sz300002", newestPrice: 22.34, applies: "+1.00%",  sharePrice: "82.1亿", totalValue: "47.12亿", finalSealingTime: "11:32:12", evenPlateNumber: "23"},
+          { index: 18728, stockName: "天怀科技", stockCode: "sz300003", newestPrice: 98.34, applies: "+21.00%",  sharePrice: "72.1亿", totalValue: "947.12亿", finalSealingTime: "11:33:12", evenPlateNumber: "22"},
+          { index: 19823, stockName: "航科科技", stockCode: 'sz300041', newestPrice: 25.24, applies: "+0.10%",  sharePrice: "72.1亿", totalValue: "87.12亿", finalSealingTime: "11:34:12", evenPlateNumber: "21"},
+          { index: 63528, stockName: "中汇科技", stockCode: "sz300021", newestPrice: 12.34, applies: "+2.40%",  sharePrice: "2.1亿", totalValue: "97.12亿", finalSealingTime: "11:35:13", evenPlateNumber: "32"},
+          { index: 28383, stockName: "浮光科技", stockCode: "sz300012", newestPrice: 63.34, applies: "+3.80%",  sharePrice: "72.1亿", totalValue: "87.12亿", finalSealingTime: "11:32:15", evenPlateNumber: "1"},
+          { index: 28742, stockName: "新麦科技", stockCode: "sz300098", newestPrice: 34.34, applies: "+12.40%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+          { index: 76347, stockName: "安怀科技", stockCode: "sz300023", newestPrice: 34.34, applies: "+12.40%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+          { index: 57273, stockName: "丁汉技术", stockCode: "sz300053", newestPrice: 34.34, applies: "+12.40%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+        ]
+      } else if(index==4) {
+        this.StockPoolItems = [
+          { index: 93884, stockName: "中信股份", stockCode: "sz300002", newestPrice: 22.34, applies: "+1.00%",  sharePrice: "82.1亿", totalValue: "47.12亿", finalSealingTime: "11:32:12", evenPlateNumber: "23"},
+          { index: 28485, stockName: "中国烫伤", stockCode: "sz300003", newestPrice: 98.34, applies: "+21.00%",  sharePrice: "72.1亿", totalValue: "947.12亿", finalSealingTime: "11:33:12", evenPlateNumber: "22"},
+          { index: 48956, stockName: "永恒科技", stockCode: 'sz300041', newestPrice: 25.24, applies: "+0.10%",  sharePrice: "72.1亿", totalValue: "87.12亿", finalSealingTime: "11:34:12", evenPlateNumber: "21"},
+          { index: 34858, stockName: "天津发展", stockCode: "sz300021", newestPrice: 12.34, applies: "+2.40%",  sharePrice: "2.1亿", totalValue: "97.12亿", finalSealingTime: "11:35:13", evenPlateNumber: "32"},
+          { index: 47385, stockName: "龙城科技", stockCode: "sz300012", newestPrice: 63.34, applies: "+3.80%",  sharePrice: "72.1亿", totalValue: "87.12亿", finalSealingTime: "11:32:15", evenPlateNumber: "1"},
+          { index: 29494, stockName: "重庆机电", stockCode: "sz300098", newestPrice: 34.34, applies: "+12.40%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+          { index: 94574, stockName: "仁慈控股", stockCode: "sz300023", newestPrice: 34.34, applies: "+12.40%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+          { index: 47473, stockName: "新卫斯顿", stockCode: "sz300053", newestPrice: 34.34, applies: "+12.40%",  sharePrice: "42.1亿", totalValue: "27.12亿", finalSealingTime: "11:32:16", evenPlateNumber: "32"},
+        ]
+      }
+    }
   }
 }
 </script>
@@ -994,6 +1358,9 @@ export default {
 }
 .el-progress{
   margin: 0 auto;
+}
+.market-card{
+  border: none;
 }
 
 
@@ -1050,5 +1417,8 @@ export default {
 }
 .el-input__inner{
   border: none;
+}
+.market-data ul {
+  background-color: #fff !important;
 }
 </style>
